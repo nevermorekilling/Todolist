@@ -5,4 +5,6 @@ from django.http import HttpResponse
 
 
 def home_page(request):
-    return HttpResponse('<html><title>To-Do lists</title></html>')
+    # Django will automatically search folders called templates
+    # inside any of your apps' directories
+    return render(request, 'home.html')
