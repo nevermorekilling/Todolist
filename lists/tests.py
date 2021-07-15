@@ -20,8 +20,13 @@ class HomePageTest(TestCase):
         response = self.client.get('/')
         self.assertTemplateUsed(response, 'home.html')
 
-    def test_home_page_returns_correct_html(self):
-        response = self.client.get('/')
+    def test_can_save_a_POST_request(self):
+        response = self.client.post('/', data={'item_text': 'A new list item'})
+        self.assertIn('A new list item', response.content.decode())
+        self.assertTemplateUsed(response, 'home.html')
+
+    # def test_home_page_returns_correct_html(self):
+    #     response = self.client.get('/')
         # request = HttpRequest()
         # response = home_page(request)
         # html = response.content.decode('utf8')
@@ -33,6 +38,6 @@ class HomePageTest(TestCase):
         # expected_html = render_to_string('home.html')
         # self.assertEqual(html, expected_html)
 
-        self.assertTemplateUsed(response, 'home.html')
+        # self.assertTemplateUsed(response, 'home.html')
 
         # self.assertTemplateUsed(response, 'wrong.html')

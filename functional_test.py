@@ -35,17 +35,40 @@ class NewVisitorTest(unittest.TestCase):
         time.sleep(1)
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
-        self.assertTrue(any(row.text == '1: Buy peacock feathers'
-                        for row in rows), "New to-do item did not appear in table")
+        # self.assertTrue(any(row.text == '1: Buy peacock feathers'
+        #                 for row in rows), f"New to-do item did not appear in table.Contents were:\n{table.text}")
+        self.assertIn('1: Buy peacock feathers', [row.text for row in rows])
         # There is still a text box inviting her to add another item.
         # She enter "Use peacock feathers to make a fly" (Edith is very
         # methodical)
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox.send_keys('Use peacock feathers to make a fly')
+        inputbox.send_keys(Keys.ENTER)
+        time.sleep(1)
+
+        # The page updates again,and now shows both items on her list
+        table = self.browser.find_element_by_id('id_list_table')
+        rows = table.find_elements_by_tag_name('tr')
+        self.assertIn('1: Buy peacock feather', [row.text for row in rows])
+        self.assertIn('2: Use peacock feathers to make a fly',
+                      [row.text for row in rows])
+
+        # Edith wonders whether the site will remember her list.
+        # Then she sees that the site has generated a unique URL for her
+        # -- ther is some explanatory text to that effect
+
+        # She visits that URL - Her to-do list is still there
+
+        # Satisfied,sho goes back to sleep
+        self.assertEqual(inputbox.get_attribute(
+            'placeholder'), 'Enter a to-do item')
+
         self.fail('Finish the test!')
 
 
 if __name__ == '__main__':
     unittest.main(warnings='ignore')
-    # unittest.main()
+# unittest.main()
 
 # print('it comes here!')
 # browser = webdriver.chrome()
@@ -53,13 +76,4 @@ if __name__ == '__main__':
 #  browser.get('http://localhost:8000')
 
 
-# The page updates again,and now shows both items on her list
-
-# Edith wonders whether the site will remember her list.
-# Then she sees that the site has generated a unique URL for her
-# -- ther is some explanatory text to that effect
-
-# She visits that URL - Her to-do list is still there
-
-# Satisfied,sho goes back to sleep
 # browser.quit()
