@@ -1,10 +1,12 @@
+from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import unittest
 import time
 
 
-class NewVisitorTest(unittest.TestCase):
+# class NewVisitorTest(unittest.TestCase):
+class NewVisitorTest(LiveServerTestCase):
     def setUp(self):
         self.browser = webdriver.Chrome()
 
@@ -17,7 +19,10 @@ class NewVisitorTest(unittest.TestCase):
         self.assertIn(row_text, [row.text for row in rows])
 
     def test_can_start_a_list_and_retireve_it_later(self):
-        self.browser.get('http://localhost:8000')
+        # Edith has heard about a cool new online to-do app. She goes
+        # to check out its homepage
+        # self.browser.get('http://localhost:8000')
+        self.browser.get(self.live_server_url)
 
         # she notices the page title and header mention to-do lists
         # assert 'To-Do' in browser.title, "Browser title was " + browser.title
@@ -58,7 +63,7 @@ class NewVisitorTest(unittest.TestCase):
         # self.assertIn('1: Buy peacock feather', [row.text for row in rows])
         # self.assertIn('2: Use peacock feathers to make a fly',
         #               [row.text for row in rows])
-        self.check_for_row_in_list_table('1: Buy peacock feather')
+        self.check_for_row_in_list_table('1: Buy peacock feathers')
         self.check_for_row_in_list_table(
             '2: Use peacock feathers to make a fly')
 
@@ -69,14 +74,14 @@ class NewVisitorTest(unittest.TestCase):
         # She visits that URL - Her to-do list is still there
 
         # Satisfied,sho goes back to sleep
-        self.assertEqual(inputbox.get_attribute(
-            'placeholder'), 'Enter a to-do item')
 
         self.fail('Finish the test!')
 
 
-if __name__ == '__main__':
-    unittest.main(warnings='ignore')
+# this can be removed because Django test runnner will be used to
+# lanuch this FT(functional_test)
+# if __name__ == '__main__':
+#     unittest.main(warnings='ignore')
 # unittest.main()
 
 # print('it comes here!')
