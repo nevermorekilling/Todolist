@@ -23,10 +23,11 @@ def home_page(request):
     # else:
     #     new_item_text = ''
 
-    if request.method == 'POST':
-        Item.objects.create(text=request.POST['item_text'])
-        # return redirect('/')
-        return redirect('/lists/the-only-list-in-the-world')
+    # if request.method == 'POST':
+    # Item.objects.create(text=request.POST['item_text'])
+    # return redirect('/')
+    # return redirect('/lists/the-only-list-in-the-world/')
+
     # return render(request, 'home.html', {'new_item_text':
     #  request.POST['item_text']})
     # return render(request, 'home.html', {'new_item_text':
@@ -41,6 +42,13 @@ def home_page(request):
 
 
 def view_list(request):
+    # handle url /lists/the-only-list-in-the-world/
+
     items = Item.objects.all()
     # return render(request, 'home.html', {'items': items})
     return render(request, 'list.html', {'items': items})
+
+
+def new_list(request):
+    Item.objects.create(text=request.POST['item_text'])
+    return redirect('/lists/the-only-list-in-the-world/')

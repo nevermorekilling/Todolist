@@ -26,26 +26,38 @@ class ItemModelTest(TestCase):
         self.assertEqual(first_saved_item.text, 'The first (ever) list item')
         self.assertEqual(second_saved_item.text, 'Item the second')
 
-    def test_can_save_a_POST_request(self):
-        self.client.post('/', data={'item_text': 'A new list item'})
-        self.assertEqual(Item.objects.count(), 1)
-        new_item = Item.objects.first()
-        self.assertEqual(new_item.text, 'A new list item')
-
-    def test_redirects_after_POST(self):
-        response = self.client.post('/', data={'item_text': 'A new list item'})
-        # getting redirected
-        self.assertEqual(response.status_code, 302)
-        # self.assertEqual(response['location'], '/')
-        self.assertEqual(response['location'],
-                         '/lists/the-only-list-in-the-world')
-
         # self.assertIn('A new list item', response.content.decode())
         # self.assertTemplateUsed(response, 'home.html')
 
 # class SmokeTest(TestCase):
 #     def test_bad_maths(self):
 #         self.assertEqual(1 + 1, 4)
+
+
+class NewListTest(TestCase):
+
+    def test_can_save_a_POST_request(self):
+        self.client.post('/lists/new', data={'item_text': 'A new list item'})
+        self.assertEqual(Item.objects.count(), 1)
+        new_item = Item.objects.first()
+        self.assertEqual(new_item.text, 'A new list item')
+
+    def test_redirects_after_POST(self):
+        response = self.client.post('/lists/new',
+                                    data={'item_text': 'A new list item'})
+        self.assertRedirects(response, '/lists/the-only-list-in-the-world/')
+
+        # <Sth Personal>
+        # Digitalization is the first step of this world!!!
+        # you got to know what kind of thing you are trying to do,
+        # and understand it in a digital way,
+        # time has changed so much.
+
+        # # getting redirected
+        # self.assertEqual(response.status_code, 302)
+        # # self.assertEqual(response['location'], '/')
+        # self.assertEqual(response['location'],
+        #                  '/lists/the-only-list-in-the-world')
 
 
 class ListViewTest(TestCase):
@@ -74,9 +86,11 @@ class ListViewTest(TestCase):
 
 class HomePageTest(TestCase):
 
-    def test_only_saves_items_when_necessary(self):
-        self.client.get('/')
-        self.assertEqual(Item.objects.count(), 0)
+    # home_page no longer handle post related things remove test method
+    # def test_only_saves_items_when_necessary(self):
+    #     self.client.get('/')
+    #     self.assertEqual(Item.objects.count(), 0)
+
     # def test_root_url_resolves_to_home_page_view(self):
     #     found = resolve('/')
     #     self.assertEqual(found.func, home_page)
