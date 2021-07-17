@@ -2,10 +2,10 @@ from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import WebDriverException
-import unittest
+# import unittest
 import time
 
-MAX_WAIT = 10
+MAX_WAIT = 3
 
 # class NewVisitorTest(unittest.TestCase):
 
@@ -59,7 +59,7 @@ class NewVisitorTest(LiveServerTestCase):
         # Francis visits the home page. There is no sign of Edith's list
         self.browser.get(self.live_server_url)
         page_text = self.browser.find_element_by_tag_name('body').text
-        self.assertNotIn('Buy peacock feather', page_text)
+        self.assertNotIn('Buy peacock feathers', page_text)
         self.assertNotIn('make a fly', page_text)
 
         # Francis starts a new list by entering a new item.
@@ -96,7 +96,8 @@ class NewVisitorTest(LiveServerTestCase):
         self.assertEqual(inputbox.get_attribute(
             'placeholder'), 'Enter a to-do item')
 
-        # She types "Buy peacock feathers" into a text box (Edith's hobby is tying
+        # She types "Buy peacock feathers" into a text box
+        # (Edith's hobby is tying
         # fly-fishing lures)
         inputbox.send_keys('Buy peacock feathers')
 
@@ -109,7 +110,9 @@ class NewVisitorTest(LiveServerTestCase):
         # table = self.browser.find_element_by_id('id_list_table')
         # rows = table.find_elements_by_tag_name('tr')
         # # self.assertTrue(any(row.text == '1: Buy peacock feathers'
-        # #                 for row in rows), f"New to-do item did not appear in table.Contents were:\n{table.text}")
+        # #                 for row in rows),
+        # f"New to-do item did not appear in table.Contents were:
+        # \n{table.text}")
         # self.assertIn('1: Buy peacock feathers', [row.text for row in rows])
 
         # There is still a text box inviting her to add another item.
