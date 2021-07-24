@@ -37,14 +37,17 @@ def _get_latest_source(source_folder):
 
 def _update_settings(source_folder, site_name):
     settings_path = source_folder + '/superlists/settings.py'
-    sed(settings_path, "DEBUG=True", "DEBUG=False")
-    sed(settings_path, 'ALLOWED_HOSTS=.+$', f'ALLOWED_HOSTS=["{site_name}"]')
+    sed(settings_path, "DEBUG = True", "DEBUG = False")
+    sed(settings_path, 'ALLOWED_HOSTS = .+$',
+        f'ALLOWED_HOSTS = ["{site_name}"]')
     secret_key_file = source_folder + '/superlists/secret_key.py'
     if not exists(secret_key_file):
         chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
         key = ''.join(random.SystemRandom().choice(chars) for _ in range(50))
         append(secret_key_file, f'SECRET_KEY="{key}"')
-    append(settings_path, '\nfrom .secret_key import SECRET_KEY')
+    append(settings_path, 'from .secret_key import SECRET_KEY')
+    # \n will not be appended, i dont know why
+    # append(settings_path, '\nfrom .secret_key import SECRET_KEY')
 
 
 def _update_virtualenv(source_folder):
