@@ -12,44 +12,44 @@ def home_page(request):
     # Django will automatically search folders called templates
     # inside any of your apps' directories
     # if request.method == 'POST':
-    #     return HttpResponse(request.POST['item_text'])
+    #     return HttpResponse(request.POST['text'])
     # print('request content is :\n', request)
     # return render(request, 'home.html')
 
     # item = Item()
-    # item.text = request.POST.get('item_text', '')
+    # item.text = request.POST.get('text', '')
     # item.save()
 
     # if request.method == 'POST':
-    #     new_item_text = request.POST['item_text']
-    #     Item.objects.create(text=new_item_text)
+    #     new_text = request.POST['text']
+    #     Item.objects.create(text=new_text)
     # else:
-    #     new_item_text = ''
+    #     new_text = ''
 
     # if request.method == 'POST':
-    # Item.objects.create(text=request.POST['item_text'])
+    # Item.objects.create(text=request.POST['text'])
     # return redirect('/')
     # return redirect('/lists/the-only-list-in-the-world/')
 
-    # return render(request, 'home.html', {'new_item_text':
-    #  request.POST['item_text']})
-    # return render(request, 'home.html', {'new_item_text':
-    #  request.POST.get('item_text', '')})
-    # return render(request, 'home.html', {'new_item_text': new_item_text})
+    # return render(request, 'home.html', {'new_text':
+    #  request.POST['text']})
+    # return render(request, 'home.html', {'new_text':
+    #  request.POST.get('text', '')})
+    # return render(request, 'home.html', {'new_text': new_text})
 
     # for debug
-    # print(request.POST.get('item_text', 'no set yet'))
+    # print(request.POST.get('text', 'no set yet'))
     # print(request.__dict__)
 
     return render(request, 'home.html', {'form': ItemForm()})
     # return render(
     #     request, 'home.html', {
-    #         'item_text': request.POST.get(
-    #             'item_text', 'no set yet')})
+    #         'text': request.POST.get(
+    #             'text', 'no set yet')})
     # items = Item.objects.all()
     # return render(request, 'home.html', {'items': items})
-    # return render(request, 'home.html', {'new_item_text':
-    # request.POST.get('id_item_text', '')})
+    # return render(request, 'home.html', {'new_text':
+    # request.POST.get('id_text', '')})
 
 
 def view_list(request, list_id):
@@ -58,7 +58,7 @@ def view_list(request, list_id):
     # items = Item.objects.filter(list=list_)
     if request.method == 'POST':
         try:
-            item = Item(text=request.POST['item_text'], list=list_)
+            item = Item(text=request.POST['text'], list=list_)
             item.full_clean()
             item.save()
             return redirect(list_)
@@ -69,7 +69,7 @@ def view_list(request, list_id):
 
 def new_list(request):
     list_ = List.objects.create()
-    item = Item.objects.create(text=request.POST['item_text'], list=list_)
+    item = Item.objects.create(text=request.POST['text'], list=list_)
     try:
         item.full_clean()
         item.save()
@@ -84,5 +84,5 @@ def new_list(request):
 
 # def add_item(request, list_id):
 #     list_ = List.objects.get(id=list_id)
-#     Item.objects.create(text=request.POST['item_text'], list=list_)
+#     Item.objects.create(text=request.POST['text'], list=list_)
 #     return redirect(f'/lists/{list_.id}/')
