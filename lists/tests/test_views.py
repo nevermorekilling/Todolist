@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.utils.html import escape
 from lists.models import Item, List
+from lists.forms import ItemForm
 
 
 # class NewItemTest(TestCase):
@@ -154,6 +155,9 @@ class HomePageTest(TestCase):
     # def test_root_url_resolves_to_home_page_view(self):
     #     found = resolve('/')
     #     self.assertEqual(found.func, home_page)
+    def test_home_page_uses_item_form(self):
+        response = self.client.get('/')
+        self.assertIsInstance(response.context['form'], ItemForm)
 
     def test_uses_home_template(self):
         response = self.client.get('/')

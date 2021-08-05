@@ -1,4 +1,5 @@
 # from django.http import response
+from lists.forms import ItemForm
 from django.core.exceptions import ValidationError
 from django.shortcuts import redirect, render
 # from django.http import HttpResponse
@@ -40,7 +41,7 @@ def home_page(request):
     # print(request.POST.get('item_text', 'no set yet'))
     # print(request.__dict__)
 
-    return render(request, 'home.html')
+    return render(request, 'home.html', {'form': ItemForm()})
     # return render(
     #     request, 'home.html', {
     #         'item_text': request.POST.get(
