@@ -43,7 +43,9 @@
 
   handlers:
     - name: restart nginx
-      service:  name=nginx state=restarted
+      service:
+          name=nginx
+          state=restarted
 
     - name: restart gunicorn
       systemd:

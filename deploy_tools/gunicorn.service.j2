@@ -7,6 +7,7 @@ WorkingDirectory=/home/{{ ansible_ssh_user }}/sites/{{ host }}/source
 Restart=on-failure
 ExecStart=/home/{{ ansible_ssh_user }}/sites/{{ host }}/virtualenv/bin/gunicorn \
     --bind unix:/tmp/{{ host }}.socket \
+	--capture-output \
     --access-logfile ../access.log \
     --error-logfile ../error.log \
     superlists.wsgi:application
