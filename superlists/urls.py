@@ -17,10 +17,15 @@ from django.conf.urls import include, url
 # from django.contrib import admin
 from lists import views as list_views
 from lists import urls as list_urls
+from accounts import views as account_views
 
 urlpatterns = [
     # url(r'^admin/', admin.site.urls),
     url(r'^$', list_views.home_page, name='home'),
     # no / at the end of the url , means an action
     url(r'^lists/', include(list_urls)),
+    url(r'^accounts/send_login_email',
+        account_views.send_login_email,
+        name='send_login_email'),
+    url(r'^accounts/login', account_views.login, name='login')
 ]
