@@ -18,6 +18,7 @@ from django.conf.urls import include, url
 from lists import views as list_views
 from lists import urls as list_urls
 from accounts import views as account_views
+from django.contrib.auth.views import logout
 
 urlpatterns = [
     # url(r'^admin/', admin.site.urls),
@@ -27,5 +28,6 @@ urlpatterns = [
     url(r'^accounts/send_login_email',
         account_views.send_login_email,
         name='send_login_email'),
-    url(r'^accounts/login', account_views.login, name='login')
+    url(r'^accounts/login', account_views.login, name='login'),
+    url(r'^accounts/logout', logout, {'next_page': '/'}, name='logout'),
 ]
