@@ -3,6 +3,7 @@ Description=Gunicorn server for {{ host }}
 
 [Service]
 User={{ ansible_ssh_user }}
+Environment={{ email_password }}
 WorkingDirectory=/home/{{ ansible_ssh_user }}/sites/{{ host }}/source
 Restart=on-failure
 ExecStart=/home/{{ ansible_ssh_user }}/sites/{{ host }}/virtualenv/bin/gunicorn \
